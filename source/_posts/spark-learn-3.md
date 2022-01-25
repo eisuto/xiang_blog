@@ -15,9 +15,7 @@ tags:
 | **union**(_otherDataset_) | 合并两个 RDD |
 | **intersection**(_otherDataset_) | 求两个 RDD 的交集 |
 | **distinct**([_numTasks_])) | 去重 |
-| **groupByKey**([_numTasks_]) | 按照 key 值进行分区，即在一个 (K, V) 对的 dataset 上调用时，返回一个 (K, Iterable<V>)
-**Note:** 如果分组是为了在每一个 key 上执行聚合操作（例如，sum 或 average)，此时使用 reduceByKey 或 aggregateByKey 性能会更好
-**Note:** 默认情况下，并行度取决于父 RDD 的分区数。可以传入 numTasks 参数进行修改。 |
+| **groupByKey**([_numTasks_]) | 按照 key 值进行分区，即在一个 (K, V) 对的 dataset 上调用时，返回一个 (K, Iterable<V>)  
 | **reduceByKey**(_func_, [_numTasks_]) | 按照 key 值进行分组，并对分组后的数据执行归约操作。 |
 | **aggregateByKey**(_zeroValue_,_numPartitions_)(_seqOp_, _combOp_, [_numTasks_]) | 当调用（K，V）对的数据集时，返回（K，U）对的数据集，其中使用给定的组合函数和 zeroValue 聚合每个键的值。与 groupByKey 类似，reduce 任务的数量可通过第二个参数进行配置。 |
 | **sortByKey**([_ascending_], [_numTasks_]) | 按照 key 进行排序，其中的 key 需要实现 Ordered 特质，即可比较 |
