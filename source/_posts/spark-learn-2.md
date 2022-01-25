@@ -10,7 +10,9 @@ RDD 全称为 Resilient Distributed Datasets，是 Spark 最基本的数据抽�
 - **分区函数**
 - **依赖关系**，RDD 会保存彼此间的依赖关系，RDD 的每次转换都会生成一个新的依赖关系，这种 RDD 之间的依赖关系就像流水线一样。在部分分区数据丢失后，可以通过这种依赖关系重新计算丢失的分区数据，而不是对 RDD 的所有分区进行重新计算；
 - **分区器**（Partitioner）Key-Value 型的 RDD 还拥有 Partitioner 分区器，用于决定数据被存储在哪个分区中，目前 Spark 中支持HashPartitioner（按照哈希分区)）和 RangeParationer（按照范围进行分区）
-- **优先位置列表**，它保存了每个分区的优先位置 (prefered location)。对于一个 HDFS 文件来说，这个列表保存的就是每个分区所在的块的位置，按照“**移动数据不如移动计算**”的理念，Spark 在进行任务调度的时候，会尽可能的将计算任务分配到其所要处理数据块的存储位置。
+- **优先位置列表**，它保存了每个分区的优先位置 (prefered location)。对于一个 HDFS 文件来说，这个列表保存的就是每个分区所在的块的位置，按照“**移动数据不如移动计算**”的理念，Spark 在进行任务调度的时候，会尽可能的将计算任务分配到其所要处理数据块的存储位置。    
+
+
 # 二、创建 RDD
 RDD 有两种创建方式，分别如下：
 ## 2.1 通过现有集合创建
@@ -67,15 +69,10 @@ Spark 支持多种缓存级别：
 | --- | --- |
 | MEMORY_ONLY | 默认的缓存级别，将 RDD 以反序列化的 Java 对象的形式存储在 JVM 中。如果内存空间不够，则部分分区数据将不再缓存。 |
 | MEMORY_AND_DISK | 将 RDD 以反序列化的 Java 对象的形式存储 JVM 中。如果内存空间不够，将未缓存的分区数据存储到磁盘，在需要使用这些分区时从磁盘读取。 |
-| MEMORY_ONLY_SER
-
- | 将 RDD 以序列化的 Java 对象的形式进行存储（每个分区为一个 byte 数组）。这种方式比反序列化对象节省存储空间，但在读取时会增加 CPU 的计算负担。仅支持 Java 和 Scala 。 |
-| MEMORY_AND_DISK_SER
-
- | 类似于 MEMORY_ONLY_SER，但是溢出的分区数据会存储到磁盘，而不是在用到它们时重新计算。仅支持 Java 和 Scala。 |
+| MEMORY_ONLY_SER | 将 RDD 以序列化的 Java 对象的形式进行存储（每个分区为一个 byte 数组）。这种方式比反序列化对象节省存储空间，但在读取时会增加 CPU 的计算负担。仅支持 Java 和 Scala 。 |
+| MEMORY_AND_DISK_SER | 类似于 MEMORY_ONLY_SER，但是溢出的分区数据会存储到磁盘，而不是在用到它们时重新计算。仅支持 Java 和 Scala。 |
 | DISK_ONLY | 只在磁盘上缓存 RDD |
-| MEMORY_ONLY_2,
-MEMORY_AND_DISK_2, etc | 与上面的对应级别功能相同，但是会为每个分区在集群中的两个节点上建立副本。 |
+| MEMORY_ONLY_2 MEMORY_AND_DISK_2, etc | 与上面的对应级别功能相同，但是会为每个分区在集群中的两个节点上建立副本。 |
 | OFF_HEAP | 与 MEMORY_ONLY_SER 类似，但将数据存储在堆外内存中。这需要启用堆外内存。 |
 
 ## 4.2 使用缓存
