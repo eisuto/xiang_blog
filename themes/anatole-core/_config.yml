@@ -43,6 +43,7 @@ valine:
 # 左下角的猫：https://github.com/EYHN/hexo-helper-live2d
 # npm install --save hexo-helper-live2d
 # npm install --save live2d-widget-model-tororo
+# npm install --save live2d-widget-model-hibiki
 # 在hexo的_config.yml的文件下添加(非主题配置文件)
 # live2d:
 #   enable: true
