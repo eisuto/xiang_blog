@@ -1,7 +1,10 @@
 ---
 title: ES 学习（1）：使用 logstach 将 mysql 数据导入到 elasticSearch 中
 date: 2022-07-22 15:23:09
-tags: elasticsearch,logstash,mysql
+tags: 
+- elasticsearch
+- logstash
+- mysql
 ---
 
 # 1. 软件准备及版本
